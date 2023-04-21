@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-const API = "http://localhost:3001/api/";
+import api, { apiSetHeader } from "../services/api";
+import { API_URL } from "../services/api";
+import { useNavigate } from "react-router-dom";
 
 function Auth() {
   const [loginLogin, setLoginLogin] = useState("");
@@ -8,13 +10,14 @@ function Auth() {
   const [signupLogin, setSignupLogin] = useState("");
   const [signupPass, setSignupPass] = useState("");
   const [signupRepPass, setSignupRepPass] = useState("");
+  const navigate = useNavigate();
   function handler(e, state) {
     state(e.target.value);
   }
   function register() {
     axios({
       method: "post",
-      url: API + "create",
+      url: API_URL + "create",
       headers: {
         "Content-Type": "application/json",
       },
@@ -34,7 +37,7 @@ function Auth() {
   function login() {
     axios({
       method: "post",
-      url: API + "auth",
+      url: API_URL + "auth",
       headers: {
         "Content-Type": "application/json",
       },
@@ -45,6 +48,8 @@ function Auth() {
       },
     })
       .then(function (response) {
+        localStorage.setItem("access", response.data);
+        navigate("/");
         console.log(response);
       })
       .catch(function (error) {

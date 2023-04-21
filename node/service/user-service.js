@@ -8,7 +8,29 @@ class UserService {
     });
     return user.hash;
   }
-  async create(login, hash) {
+  async setToken(login, refresh) {
+    const result = await auth.update(
+      {
+        refresh: refresh,
+      },
+      {
+        where: {
+          login: login,
+        },
+      }
+    );
+    return result;
+  }
+  async checkToken(login, refresh) {
+    const result = await auth.findOne({
+      where: {
+        refresh: refresh,
+        login: login,
+      },
+    });
+    return result instanceof auth;
+  }
+  async createUser(login, hash) {
     const [user, created] = await auth.findOrCreate({
       defaults: {
         login: login,

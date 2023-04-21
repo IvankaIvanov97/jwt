@@ -10,8 +10,9 @@ module.exports = async function (jwt) {
       issuer: "http://localhost:3000",
       audience: "http://localhost:3000",
     });
-    if (userService.checkEmail(payload.email)) {
-      return true;
+    const login = await userService.checkEmail(payload.login);
+    if (login) {
+      return payload.login;
     } else {
       return false;
     }

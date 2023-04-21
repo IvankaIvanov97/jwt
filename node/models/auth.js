@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     refresh: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
     },
   });
