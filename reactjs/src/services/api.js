@@ -34,7 +34,7 @@ api.interceptors.response.use(
             if (res.status === 200) {
                 localStorage.setItem("access", res.data.access_token);
                 apiSetHeader("Auth", `${localStorage.getItem("access")}`);
-                originalRequest.headers.Bearer = localStorage.getItem("access");
+                originalRequest.headers.Auth = localStorage.getItem("access");
                 return api.request(originalRequest);
             } else {
                 window.location.href = MAIN_URL;
